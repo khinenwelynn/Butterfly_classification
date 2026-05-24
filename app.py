@@ -7,13 +7,12 @@ import io
 
 app = Flask(__name__)
 
-# ── Load model & labels once at startup ───────────────────────────────────────
+
 model    = tf.keras.models.load_model("butterfly_cnn.keras")
 classes  = np.load("label_classes.npy", allow_pickle=True)
 IMG_SIZE = (150, 150)
 
 def prepare_image(file_bytes):
-    """Convert uploaded file bytes → model-ready numpy array."""
     img       = Image.open(io.BytesIO(file_bytes)).convert("RGB")
     img       = img.resize(IMG_SIZE)
     arr       = np.array(img) / 255.0
